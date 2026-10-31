@@ -1,0 +1,82 @@
+{
+  "title": "One bright mode is enough: exact finite-copy Gaussian Fisher information for pure single-mode models",
+  "upload_type": "publication",
+  "publication_type": "preprint",
+  "description": "<p><strong>Unrefereed research candidate.</strong> When m identical copies of a quantum state of light are measured with Gaussian measurements (linear optics, Gaussian auxiliary modes, homodyne detection), measuring the copies jointly can give more Fisher information than measuring them one by one (Navarro, Morelli, Sanz and Mehboudi, arXiv:2512.20534), who left finite-copy optimality open. For every smooth family of pure single-mode Gaussian states and every m, this package proves the exact maximum of the Fisher information over all fixed (non-adaptive) Gaussian measurements, including ancilla-assisted schemes: a one-angle formula attained by concentrating the mean into one bright output and homodyne detection of every output. It also gives the exact optimum when measurement-seed squeezing is capped (in normalised coordinates), the exact shortfall from the quantum Fisher information (nondecreasing in m, at most one copy's variance information &lambda;<sup>2</sup>/2, with an explicit limit), and a necessary and sufficient condition for strict collective advantage.</p><p>The archive contains the 9-page manuscript (PDF and LaTeX), numerical checks with semantic negative controls, CI and SHA-256 sums. Assurance: written proofs; internal AI-assisted review only (not peer review, independent reproduction or formal verification); bounded prior-art search. Mixed states, multimode tangents and adaptive strategies are not covered. Creator: Anonymous. Text CC0-1.0; code MIT.</p>",
+  "creators": [
+    {
+      "name": "Anonymous"
+    }
+  ],
+  "version": "1.0.0-candidate",
+  "publication_date": "2026-10-31",
+  "access_right": "open",
+  "license": "cc-zero",
+  "keywords": [
+    "Gaussian quantum metrology",
+    "Fisher information",
+    "homodyne detection",
+    "superadditivity",
+    "collective measurement",
+    "quantum Fisher information",
+    "continuous-variable quantum information"
+  ],
+  "related_identifiers": [
+    {
+      "identifier": "https://github.com/ipitchford/finite-copy-gaussian-metrology/tree/v1.0.0-candidate",
+      "relation": "isSupplementTo",
+      "scheme": "url"
+    },
+    {
+      "identifier": "https://evidencepress.org/releases/finite-copy-gaussian-metrology/",
+      "relation": "isDocumentedBy",
+      "scheme": "url"
+    },
+    {
+      "identifier": "10.1103/PhysRevLett.72.3439",
+      "relation": "references",
+      "scheme": "doi"
+    },
+    {
+      "identifier": "10.22331/q-2022-06-23-743",
+      "relation": "references",
+      "scheme": "doi"
+    },
+    {
+      "identifier": "10.1103/PhysRevA.66.032316",
+      "relation": "references",
+      "scheme": "doi"
+    },
+    {
+      "identifier": "10.1038/s41534-019-0124-4",
+      "relation": "references",
+      "scheme": "doi"
+    },
+    {
+      "identifier": "10.1201/9781315118727",
+      "relation": "references",
+      "scheme": "doi"
+    },
+    {
+      "identifier": "arXiv:2512.20534",
+      "relation": "references",
+      "scheme": "arxiv"
+    },
+    {
+      "identifier": "arXiv:2610.02625",
+      "relation": "references",
+      "scheme": "arxiv"
+    },
+    {
+      "identifier": "arXiv:2609.40307",
+      "relation": "references",
+      "scheme": "arxiv"
+    },
+    {
+      "identifier": "arXiv:1303.3682",
+      "relation": "references",
+      "scheme": "arxiv"
+    }
+  ],
+  "notes": "Code (all .py files and the CI workflow) is MIT; prose, manuscript and data are CC0-1.0. Version DOI 10.5281/zenodo.23837733; concept DOI 10.5281/zenodo.23837732."
+}

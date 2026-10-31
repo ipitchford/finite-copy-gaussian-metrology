@@ -1,0 +1,27 @@
+cff-version: 1.2.0
+message: "Please cite this versioned research candidate by its DOI."
+title: "One bright mode is enough: exact finite-copy Gaussian Fisher information for pure single-mode models"
+type: software
+authors:
+  - name: Anonymous
+version: 1.0.0-candidate
+doi: 10.5281/zenodo.23837733
+date-released: 2026-10-31
+repository-code: "https://github.com/ipitchford/finite-copy-gaussian-metrology"
+url: "https://evidencepress.org/releases/finite-copy-gaussian-metrology/"
+license:
+  - CC0-1.0
+  - MIT
+identifiers:
+  - type: doi
+    value: 10.5281/zenodo.23837733
+    description: "Version DOI (1.0.0-candidate)"
+  - type: doi
+    value: 10.5281/zenodo.23837732
+    description: "Concept DOI (all versions)"
+keywords:
+  - Gaussian quantum metrology
+  - Fisher information
+  - homodyne detection
+  - superadditivity
+abstract: "Exact optimum of the Fisher information over all fixed Gaussian measurements (including ancilla-assisted) on m copies of a pure single-mode Gaussian model; attained by concentrating the mean into one bright output and homodyne detection. Also: exact optimum under a seed-squeezing cap, exact shortfall from the quantum Fisher information, and a criterion for strict collective advantage. Unrefereed candidate; internal AI-assisted review only. Text CC0-1.0; code MIT."

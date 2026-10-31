@@ -1,0 +1,323 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[margin=24mm]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern,microtype,amsmath,amssymb,amsthm,booktabs}
+\usepackage{xcolor,array}
+\usepackage[hidelinks]{hyperref}
+\hypersetup{pdftitle={One bright mode is enough: exact finite-copy Gaussian Fisher information for pure single-mode models},pdfauthor={Anonymous},pdfsubject={Research manuscript with analytical proofs and numerical checks (AI-assisted)}}
+\usepackage[font=small,labelfont=bf]{caption}
+\usepackage{enumitem}
+\setlist{nosep}
+\setlength{\parskip}{3pt}
+\setlength{\parindent}{1.3em}
+\setlength{\emergencystretch}{2em}
+\newtheorem{theorem}{Theorem}
+\newtheorem{proposition}{Proposition}
+\newtheorem{lemma}{Lemma}
+\newtheorem{corollary}{Corollary}
+\theoremstyle{definition}\newtheorem{definition}{Definition}
+\theoremstyle{remark}\newtheorem{remark}{Remark}
+\newcommand{\R}{\mathbb R}
+\newcommand{\tr}{\operatorname{Tr}}
+\newcommand{\diag}{\operatorname{diag}}
+\newcommand{\one}{\mathbf 1}
+\newcommand{\takeaway}[1]{\par\smallskip\noindent\textit{In plain words:} #1\par\smallskip}
+\title{One bright mode is enough:\newline exact finite-copy Gaussian Fisher information\newline for pure single-mode models}
+\author{Anonymous\thanks{AI-assistance statement: the research, proofs, computations and text of this manuscript were produced with substantial assistance from AI systems. The results have been checked by internal computations and internal AI-assisted reviews only; they have not undergone external specialist peer review. No individual author or institutional affiliation is assigned.}}
+\date{Version 1.0.0-candidate, 31 October 2026\\[2pt]\small DOI \href{https://doi.org/10.5281/zenodo.23837733}{10.5281/zenodo.23837733}; code: \url{https://github.com/ipitchford/finite-copy-gaussian-metrology}}
+\begin{document}
+\maketitle
+\begin{abstract}
+A small change $\theta$ in a light beam can be read off by measuring the beam's field quadratures. If the same state is prepared $m$ times, quantum mechanics allows the information gained from the copies to add up exactly. Laboratories, however, often restrict themselves to \emph{Gaussian measurements}: linear optics, auxiliary squeezed or vacuum light, and homodyne detection. Navarro, Morelli, Sanz and Mehboudi showed that with this restriction, measuring the copies jointly can give strictly more Fisher information than measuring them one by one. Their scheme first combines the copies in an interferometer, concentrating the changing mean into one ``bright'' output, and they left open whether it is the best Gaussian scheme for a finite number of copies.
+
+We answer this for every smooth one-parameter family of \emph{pure single-mode} Gaussian states and every number of copies $m$. The largest Fisher information achievable by any fixed (non-adaptive) Gaussian measurement on the $m$ copies, including ancilla-assisted schemes, is given in closed form by a one-angle optimisation (Theorem~\ref{thm:main}). It is attained by the concentration interferometer, homodyne detection of the $m-1$ ``dark'' outputs along a fixed axis, and one homodyne angle on the bright output. Three consequences follow. We give the exact optimum when the squeezing of the measurement's seed state is capped (Theorem~\ref{thm:cap}; the cap is stated in normalised coordinates, not as a laboratory energy budget). The total shortfall from the quantum Fisher information never exceeds one copy's worth of variance information, and converges to an explicit limit (Corollary~\ref{cor:gap}). Joint measurement helps exactly when the mean moves and the variance changes, and the mean's direction of change is not an axis of the variance's change (Proposition~\ref{prop:strict}). For the coherent-squeezing example of Navarro et al.\ we obtain the exact optimum at every displacement and copy number.
+\end{abstract}
+
+\section{Introduction}
+
+\paragraph{The question.}
+In quantum metrology one estimates a parameter $\theta$ from measurements on a quantum state $\rho_\theta$. The precision available from a given measurement is governed by its classical Fisher information: by the Cram\'er--Rao bound, $N$ independent repetitions cannot give an unbiased estimator with variance below $1/(N F)$. Optimising over all quantum measurements gives the quantum Fisher information (QFI), which is additive: for $m$ independent copies, $\rho_\theta^{\otimes m}$ has exactly $m$ times the QFI of one copy~\cite{BraunsteinCaves1994}.
+
+For light, the most accessible measurements are Gaussian ones: mixing modes in passive or active linear optics, adding auxiliary modes prepared in Gaussian states, and detecting field quadratures by homodyne detection~\cite{Serafini2017}. Restricting to these changes the picture. Navarro et al.~\cite{Navarro2025} proved that if $\theta$ is encoded only in the mean (displacement) or only in the covariance matrix of identical single-mode Gaussian copies (with an extension to isothermal multimode models), the best Gaussian measurement on $m$ copies is no better than measuring each copy separately. When $\theta$ moves both the mean and the covariance, they constructed a joint Gaussian measurement that does strictly better. Their measurement uses an interferometer that pushes the repeated change of the mean into a single output mode, the \emph{bright} mode, while the remaining \emph{dark} outputs retain only the changing covariance. They showed the scheme is asymptotically optimal as $m\to\infty$, and explicitly left open which Gaussian strategy is optimal for a finite number of copies.
+
+\paragraph{What this paper proves.}
+We settle that question for pure single-mode models: every family $\theta\mapsto\rho_\theta$ of pure one-mode Gaussian states with differentiable first and second moments, at any operating point and for every $m\ge1$.
+\begin{enumerate}[label=(\roman*)]
+\item \textbf{Exact optimum} (Theorem~\ref{thm:main}). The supremum of the Fisher information over all Gaussian measurements on $\rho_\theta^{\otimes m}$ (Definition~\ref{def:gauss}, including ancillas, noisy and partial detection, and classical post-processing) equals the explicit formula~\eqref{eq:main}. It is attained by the concentration interferometer of~\cite{Navarro2025} followed by homodyne detection on every output. Only one angle, on the bright output, has to be optimised.
+\item \textbf{Bounded measurement squeezing} (Theorem~\ref{thm:cap}). If the measurement seed may be squeezed by at most a factor $e^{R}$, the exact optimum is again a one-variable concave problem, attained by the same interferometer.
+\item \textbf{How much is lost} (Corollary~\ref{cor:gap}). The total shortfall $mQ-F_m$ from the quantum Fisher information $mQ$ is nondecreasing in $m$, never exceeds the variance information $\lambda^2/2$ of a single copy, and converges to an explicit limit.
+\item \textbf{When joint measurement helps} (Proposition~\ref{prop:strict}). For $m\ge2$, the optimum exceeds $m$ times the single-copy optimum if and only if the whitened mean tangent is nonzero and is not an eigenvector of the nonzero whitened covariance tangent; equivalently $\det[w,Aw]\ne0$.
+\end{enumerate}
+
+\paragraph{What is not new.}
+The concentration interferometer and its large-displacement value in the coherent-squeezing example are due to Navarro et al.~\cite{Navarro2025}. Optimal single-copy Gaussian measurements have been studied before, for example for phase estimation~\cite{Oh2019}. The Fisher-information formula for Gaussian outcomes and the reduction of mixed measurement seeds to pure ones are standard~\cite{Cenni2022,Navarro2025}. Our contribution is the \emph{upper bound}: no collective Gaussian measurement, however entangling, beats concentration plus homodyne detection at any finite $m$. Theorem~\ref{thm:cap}, Corollary~\ref{cor:gap} and the invariant form of Proposition~\ref{prop:strict} are consequences of the same argument.
+
+\paragraph{Related recent work.}
+Liu, Wang and Ma~\cite{Liu2026} show that Gaussian Fisher information can be superadditive even when $\theta$ enters only through covariances, for two \emph{different} thermal modes. That setting is complementary: here the copies are identical and pure, and the effect requires a changing mean. Girardi et al.~\cite{Girardi2026} prove a Gaussian quantum Stein lemma in which first and second moments decouple asymptotically; it concerns hypothesis testing, not a finite-copy Fisher-information optimum.
+
+\paragraph{How the proof works.}
+The argument has three steps. (1)~Every Gaussian measurement can be reduced, without losing information, to homodyne detection of a complete set of commuting quadratures on the copies plus vacuum ancillas (Lemma~\ref{lem:reduce}). (2)~Such a measurement is described by a symmetric matrix $B$ with $B^2\le I$ that anticommutes with the symplectic form. The Fisher information depends on $B$ only through a few quadratic quantities, and $B^2\le I$ confines the two that matter to a disk (Lemma~\ref{lem:bound}). (3)~A rank-one, copy-symmetric choice of $B$ reaches every point of the disk's boundary, and it is the concentration measurement. The whole proof uses only elementary matrix inequalities.
+
+\paragraph{Roadmap.}
+Section~\ref{sec:setting} fixes conventions and the measurement class. Section~\ref{sec:main} states and proves the main theorem. Section~\ref{sec:consequences} derives the squeezing-capped optimum, the shortfall from the QFI, the strictness criterion, and the coherent-squeezing example. Section~\ref{sec:scope} lists the limits of the result and Section~\ref{sec:repro} the numerical checks.
+
+\section{Setting}\label{sec:setting}
+
+\subsection{Conventions and normal form}
+
+Each mode has quadratures $q,p$ with $[q,p]=i$. For a state with mean vector $d=\langle R\rangle$ we use the covariance matrix $\sigma_{jk}=\langle\{R_j-d_j,R_k-d_k\}\rangle$, which is twice the ordinary covariance; the vacuum has $\sigma=I_2$. A Gaussian state is pure exactly when $\det\sigma=1$ for one mode. On $n$ modes we order coordinates as $(q_1,\dots,q_n,p_1,\dots,p_n)$, with symplectic form $\Omega_n=\left(\begin{smallmatrix}0&I_n\\-I_n&0\end{smallmatrix}\right)$.
+
+Let $\theta\mapsto\rho_\theta$ be a family of pure one-mode Gaussian states on an open interval, with $d_\theta$ and $\sigma_\theta$ differentiable at the operating point $\theta_0$. Primes denote derivatives at $\theta_0$.
+
+\begin{lemma}[normal form]\label{lem:normal}
+There is a fixed (parameter-independent) symplectic matrix $S_0$ such that, after the change of coordinates $R\mapsto S_0R$,
+\begin{equation}\label{eq:normal}
+\sigma=I_2,\qquad \sigma'=\lambda\begin{pmatrix}1&0\\0&-1\end{pmatrix},\qquad d'=\begin{pmatrix}a\\ b\end{pmatrix},\qquad \lambda\ge0 .
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+Write $\sigma(\theta_0)=TT^{\mathsf T}$ with $T$ symplectic (Williamson's theorem for a pure state) and use $T^{-1}$ to make $\sigma=I_2$. Purity gives $\det\sigma_\theta=1$, so $\tr(\sigma^{-1}\sigma')=0$ and $\sigma'$ is a traceless real symmetric $2\times2$ matrix. A rotation, which is symplectic, diagonalises it as $\lambda\diag(1,-1)$ with $\lambda\ge0$.
+\end{proof}
+
+A fixed Gaussian unitary on each copy maps Gaussian measurements to Gaussian measurements and does not change Fisher information. We therefore work in the normal form~\eqref{eq:normal} throughout and set
+\[
+D=a^2+b^2,\qquad c=\frac{\lambda^2}{2}.
+\]
+For $m$ copies the covariance is $I_{2m}$, the mean tangent is $v=(a\one_m,\,b\one_m)$ and the covariance tangent is $H=\lambda J_m$, $J_m=\diag(I_m,-I_m)$.
+
+\takeaway{after a fixed change of frame, each copy is a vacuum-like state whose mean moves in a direction $(a,b)$ and whose noise ellipse is squeezed along the $q$ axis at rate $\lambda$.}
+
+\subsection{Gaussian measurements}
+
+\begin{definition}[Gaussian measurement]\label{def:gauss}
+A \emph{Gaussian measurement} on $m$ modes consists of: (i)~appending $k\ge0$ ancilla modes in a fixed Gaussian state; (ii)~applying a fixed Gaussian unitary to all $m+k$ modes; (iii)~homodyne detection of one quadrature on each of some subset of the output modes; and (iv)~any parameter-independent classical post-processing of the outcomes. ``Fixed'' means independent of $\theta$.
+\end{definition}
+
+This class contains heterodyne and general-dyne detection (realised with ancillas and beam splitters), detection with added Gaussian noise, discarded outputs and Gaussian channels applied before measurement~\cite{Serafini2017,Giedke2002}. It is the operational class considered in~\cite{Navarro2025,Cenni2022}. It excludes outcome-dependent feed-forward and non-Gaussian detection such as photon counting.
+
+\paragraph{Fisher information.} For a family of Gaussian outcome laws $\mathcal N(\mu_\theta,C_\theta)$ in $\R^n$ with $C$ invertible,
+\begin{equation}\label{eq:gaussFI}
+F=\mu'^{\mathsf T}C^{-1}\mu'+\tfrac12\tr\!\big[(C^{-1}C')^2\big].
+\end{equation}
+Measuring commuting quadratures $U^{\mathsf T}R$ of a Gaussian state with mean $d$ and covariance $\sigma$ gives outcomes distributed as $\mathcal N(U^{\mathsf T}d,\tfrac12U^{\mathsf T}\sigma U)$.
+
+\begin{lemma}[reduction to complete homodyne detection]\label{lem:reduce}
+For every Gaussian measurement on $\rho_\theta^{\otimes m}$ there are $k\ge0$ and a real $2(m+k)\times(m+k)$ matrix $U$ with
+\begin{equation}\label{eq:frame}
+U^{\mathsf T}U=I_{m+k},\qquad U^{\mathsf T}\Omega_{m+k}U=0,
+\end{equation}
+such that the measurement's Fisher information is at most that of measuring $U^{\mathsf T}R$ on $\rho_\theta^{\otimes m}\otimes|0\rangle\langle0|^{\otimes k}$. The latter equals
+\begin{equation}\label{eq:FK}
+F(K)=2\,\tilde v^{\mathsf T}K\tilde v+\tfrac12\tr\!\big[(K\tilde H)^2\big],\qquad K=UU^{\mathsf T},
+\end{equation}
+where $\tilde v=(a\,u,\,b\,u)$, $u=(\one_m,0_k)$, and $\tilde H=\lambda\diag(\Pi,-\Pi)$ with $\Pi=\diag(I_m,0_k)$.
+\end{lemma}
+
+\begin{proof}
+A mixed Gaussian ancilla has a Gaussian purification~\cite{Serafini2017}. Adding the purifying modes and never measuring them leaves all outcome statistics unchanged, so we may take the ancillas pure. A pure Gaussian ancilla is a Gaussian unitary applied to vacuum, and that unitary can be absorbed into step~(ii). Modes not detected in step~(iii) may be detected along any quadrature and the result discarded. Discarding is classical post-processing, which never increases Fisher information. So we may assume vacuum ancillas and homodyne detection of all $n=m+k$ output modes.
+
+The detected observables are $GR$ for a real $n\times2n$ matrix $G$ of rank $n$. Because the detected quadratures commute, $G\Omega_nG^{\mathsf T}=0$. Write $G=TU^{\mathsf T}$ with $T$ invertible and the columns of $U$ orthonormal. Then $U^{\mathsf T}\Omega_nU=T^{-1}G\Omega_nG^{\mathsf T}T^{-\mathsf T}=0$, and the outcomes $TU^{\mathsf T}R$ are an invertible linear image of $U^{\mathsf T}R$, so they carry the same Fisher information. The state $\rho_\theta^{\otimes m}\otimes|0\rangle\langle0|^{\otimes k}$ has covariance $I_{2n}$, mean tangent $\tilde v$ and covariance tangent $\tilde H$. The outcome law is $\mathcal N(U^{\mathsf T}d,\tfrac12I_n)$, with $\mu'=U^{\mathsf T}\tilde v$ and $C'=\tfrac12U^{\mathsf T}\tilde HU$. Formula~\eqref{eq:gaussFI} gives $2\tilde v^{\mathsf T}UU^{\mathsf T}\tilde v+\tfrac12\tr[(U^{\mathsf T}\tilde HU)^2]$, which is~\eqref{eq:FK} because $\tr[(U^{\mathsf T}\tilde HU)^2]=\tr[(UU^{\mathsf T}\tilde H)^2]$.
+\end{proof}
+
+\begin{remark}[general-dyne seeds]\label{rem:seed}
+With no ancilla, a general-dyne measurement with pure seed covariance $M$ ($M\Omega M=\Omega$) has outcome law $\mathcal N(d,\tfrac12(\Sigma+M))$ and Fisher information $F=2v^{\mathsf T}(\Sigma+M)^{-1}v+\tfrac12\tr[((\Sigma+M)^{-1}H)^2]$~\cite{Cenni2022,Navarro2025}. With $\Sigma=I$ this is~\eqref{eq:FK} for $K=(I+M)^{-1}$. A mixed seed is a pure seed followed by independent parameter-free Gaussian noise: by Williamson's theorem $M=SDS^{\mathsf T}$ with $D\ge I$, and $M=M_0+N$ with $M_0=SS^{\mathsf T}$ pure and $N=S(D-I)S^{\mathsf T}\ge0$. The outcome law is then the convolution of the pure-seed law with $\mathcal N(0,N/2)$, so its Fisher information is no larger~\cite{Cenni2022}.
+\end{remark}
+
+\section{The exact finite-copy optimum}\label{sec:main}
+
+\begin{theorem}[exact optimum]\label{thm:main}
+In the normal form~\eqref{eq:normal}, let $F_m^G$ be the supremum of the Fisher information at $\theta_0$ over all Gaussian measurements on $\rho_\theta^{\otimes m}$. Then for every $m\ge1$
+\begin{equation}\label{eq:main}
+\boxed{\;F_m^G=(m-1)\frac{\lambda^2}{2}+\max_{\phi\in\R}\Big\{2m\,(a\cos\phi+b\sin\phi)^2+\frac{\lambda^2}{2}\cos^2 2\phi\Big\}.\;}
+\end{equation}
+The supremum is a maximum. It is attained without ancillas: apply a real orthogonal interferometer whose first output is the symmetric combination $m^{-1/2}\sum_jR_j$, detect the quadrature $q\cos\phi+p\sin\phi$ on that bright output with $\phi$ maximising~\eqref{eq:main}, and detect $q$ on each of the $m-1$ dark outputs.
+\end{theorem}
+
+\takeaway{you can never do better than to add up the copies coherently in one output, measure that output along the best compromise angle, and measure every other output along the axis where the noise changes fastest.}
+
+The upper bound rests on the following matrix lemma.
+
+\begin{lemma}[disk bound]\label{lem:bound}
+Let $B$ be a real symmetric $2n\times2n$ matrix with $B\Omega_n+\Omega_nB=0$ and $B^2\le I$, and put $K=(I+B)/2$. With $\tilde v,\tilde H$ as in Lemma~\ref{lem:reduce}, $e=u/\sqrt m$, and $B=\left(\begin{smallmatrix}X&Y\\Y&-X\end{smallmatrix}\right)$, set $x=e^{\mathsf T}Xe$ and $y=e^{\mathsf T}Ye$. Then $x^2+y^2\le1$ and
+\begin{equation}\label{eq:disk}
+F(K)\le mD+mc+m(a^2-b^2)\,x+2mab\,y-c\,y^2 .
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+\emph{Block form.} Write $B=\left(\begin{smallmatrix}P&Q\\Q^{\mathsf T}&S\end{smallmatrix}\right)$. Then $B\Omega_n+\Omega_nB=0$ reads $Q=Q^{\mathsf T}$ and $S=-P$, so $B=\left(\begin{smallmatrix}X&Y\\Y&-X\end{smallmatrix}\right)$ with $X,Y$ symmetric. The upper-left block of $B^2\le I$ gives $X^2+Y^2\le I_n$; no commutativity is needed.
+
+\emph{The disk.} Since $e$ is a unit vector, $x^2+y^2\le\|Xe\|^2+\|Ye\|^2=e^{\mathsf T}(X^2+Y^2)e\le1$.
+
+\emph{Mean term.} Since $\tilde v^{\mathsf T}\tilde v=mD$,
+\[
+2\tilde v^{\mathsf T}K\tilde v=\tilde v^{\mathsf T}\tilde v+\tilde v^{\mathsf T}B\tilde v=mD+(a^2-b^2)\,u^{\mathsf T}Xu+2ab\,u^{\mathsf T}Yu=mD+m(a^2-b^2)x+2mab\,y .
+\]
+
+\emph{Covariance term.} Expanding $K\tilde H=\tfrac12(\tilde H+B\tilde H)$,
+\[
+\tfrac12\tr[(K\tilde H)^2]=\tfrac18\big(\tr\tilde H^2+2\tr(B\tilde H^2)+\tr[(B\tilde H)^2]\big).
+\]
+Here $\tilde H^2=\lambda^2\diag(\Pi,\Pi)$, so $\tr\tilde H^2=2m\lambda^2$ and $\tr(B\tilde H^2)=\lambda^2(\tr X\Pi-\tr X\Pi)=0$. Also $B\tilde H=\lambda\left(\begin{smallmatrix}X\Pi&-Y\Pi\\Y\Pi&X\Pi\end{smallmatrix}\right)$, whence $\tr[(B\tilde H)^2]=2\lambda^2[\tr(\tilde X^2)-\tr(\tilde Y^2)]$ with $\tilde X=\Pi X\Pi$, $\tilde Y=\Pi Y\Pi$. Hence
+\[
+\tfrac12\tr[(K\tilde H)^2]=\frac{\lambda^2m}{4}+\frac{\lambda^2}{4}\big[\tr(\tilde X^2)-\tr(\tilde Y^2)\big].
+\]
+Since $0\le\Pi\le I$, we have $X\Pi X\le X^2$ and $Y\Pi Y\le Y^2$. Hence $\tr(\tilde X^2)=\tr(\Pi X\Pi X\Pi)\le\tr(\Pi X^2\Pi)$, and similarly for $Y$. Therefore
+\[
+\tr(\tilde X^2)\le\tr\big(\Pi(X^2+Y^2)\Pi\big)-\tr(\Pi Y^2\Pi)\le m-\tr(\tilde Y^2),
+\]
+and so $\tr(\tilde X^2)-\tr(\tilde Y^2)\le m-2\tr(\tilde Y^2)\le m-2y^2$. The last step uses $\tr(\tilde Y^2)\ge\|\tilde Ye\|^2\ge(e^{\mathsf T}\tilde Ye)^2=y^2$, because $\Pi e=e$. Thus the covariance term is at most $mc-c\,y^2$, and adding the mean term gives~\eqref{eq:disk}.
+\end{proof}
+
+\begin{proof}[Proof of Theorem~\ref{thm:main}]
+\emph{Upper bound.} By Lemma~\ref{lem:reduce} it suffices to bound $F(K)$ for $K=UU^{\mathsf T}$ with $U$ satisfying~\eqref{eq:frame}. The columns of $U$ and of $\Omega_nU$ are orthonormal and mutually orthogonal, since $(\Omega_nU)^{\mathsf T}U=-U^{\mathsf T}\Omega_nU=0$. Together they form an orthonormal basis, so $UU^{\mathsf T}+\Omega_nUU^{\mathsf T}\Omega_n^{\mathsf T}=I$. Hence $B=2K-I$ is symmetric, $B^2=I$, and $\Omega_nB\Omega_n^{\mathsf T}=I-2K=-B$, so $B\Omega_n+\Omega_nB=0$. Lemma~\ref{lem:bound} applies.
+
+For fixed $y$, the right side of~\eqref{eq:disk} is affine in $x$, so its maximum over the disk can be taken on the circle $x^2+y^2=1$. If $a^2=b^2$, either sign of $x$ does. Writing $x=\cos2\phi$, $y=\sin2\phi$ and using
+\[
+\begin{gathered}
+mD+m(a^2-b^2)\cos2\phi+2mab\sin2\phi=2m(a\cos\phi+b\sin\phi)^2,\\
+mc-c\sin^22\phi=(m-1)c+c\cos^22\phi,
+\end{gathered}
+\]
+the right side of~\eqref{eq:disk} becomes the expression maximised in~\eqref{eq:main}.
+
+\emph{Attainment.} Let $O$ be a real orthogonal $m\times m$ matrix with first row $e^{\mathsf T}$, applied to the $q$'s and the $p$'s alike. This is a passive interferometer $\hat O=\diag(O,O)$, and it preserves the covariance $I_{2m}$ and the tangent $H$, because $\hat O\hat O^{\mathsf T}=I_{2m}$ and $\hat OJ_m\hat O^{\mathsf T}=J_m$. It sends the mean tangent to $(\sqrt m\,a,\sqrt m\,b)$ on output~$1$ and to zero on the other outputs. Detect $q_1\cos\phi+p_1\sin\phi$ on output~$1$ and $q_j$ on outputs $j\ge2$. These observables commute, and the outcomes are independent Gaussians with variance $\tfrac12$. The bright outcome has mean derivative $\sqrt m(a\cos\phi+b\sin\phi)$ and variance derivative $\tfrac\lambda2\cos2\phi$. Each dark outcome has mean derivative $0$ and variance derivative $\tfrac\lambda2$. By~\eqref{eq:gaussFI} and additivity over independent outcomes, the Fisher information is
+\[
+2m(a\cos\phi+b\sin\phi)^2+\frac{\lambda^2}{2}\cos^22\phi+(m-1)\frac{\lambda^2}{2},
+\]
+which equals the bound at the maximising $\phi$.
+\end{proof}
+
+\begin{remark}[back to laboratory coordinates]
+The normalising transformation $S_0$ of Lemma~\ref{lem:normal} is the same on every copy. In mode-by-mode (interleaved) coordinates it is $I_m\otimes S_0$, while the copy interferometer is $O\otimes I_2$, and these commute. Each homodyne in Theorem~\ref{thm:main} is therefore a single linear quadrature of one physical output mode, namely a homodyne angle followed by a rescaling of the outcome, which does not change Fisher information. No active squeezing element is needed.
+\end{remark}
+
+\begin{remark}[what ``finite copies'' means here]
+Here $m$ is the number of copies measured \emph{jointly} in one block, and $F_m^G$ is the Fisher information of one block at a known operating point $\theta_0$. If the same fixed apparatus is used on $N$ independent blocks, the total Fisher information is $NF_m^G$. The optimal apparatus depends on $\theta_0$. A complete procedure for an initially unknown $\theta$ would need a pilot or adaptive stage, which is not analysed here.
+\end{remark}
+
+\begin{remark}[locally efficient estimation]
+Let $s_{\theta_0}$ be the score of the attaining measurement's outcome law. For $N$ independent repetitions with outcomes $Z_1,\dots,Z_N$ and $F_m^G>0$, the estimator $\hat\theta=\theta_0+(NF_m^G)^{-1}\sum_js_{\theta_0}(Z_j)$ is locally unbiased at $\theta_0$ with variance $1/(NF_m^G)$ there. This is the standard local statement, not a global estimator.
+\end{remark}
+
+\section{Consequences}\label{sec:consequences}
+
+\subsection{Solving for the angle}
+With $r=m|a^2-b^2|$ and $s=2m|ab|$, choosing signs optimally turns~\eqref{eq:main} into
+\begin{equation}\label{eq:scalar}
+F_m^G=m(D+c)+\max_{0\le t\le1}\big\{r\sqrt{1-t^2}+st-ct^2\big\}.
+\end{equation}
+The braced function is concave. If $r,s,c>0$, its derivative $s-2ct-rt/\sqrt{1-t^2}$ is positive at $t=0$ and tends to $-\infty$ as $t\to1$, so there is a unique interior maximiser. If $r=0$ and $c>0$, the maximiser is $t=\min\{s/(2c),1\}$. If $s=0$, it is $t=0$. If $c=0$, then $F_m^G=2mD$.
+
+\subsection{A cap on measurement squeezing}
+
+Ideal homodyne detection corresponds to infinitely squeezed measurement seeds. With finite squeezing, the same argument gives an exact answer.
+
+\begin{theorem}[bounded seed squeezing]\label{thm:cap}
+Fix $R\ge0$ and put $\beta=\tanh(R/2)$. Let $F_{m,R}$ be the supremum of the Fisher information over general-dyne measurements on $\rho_\theta^{\otimes m}$ (no ancillas) whose pure seed covariance, in the normal-form coordinates, satisfies $e^{-R}I\le M\le e^{R}I$. Then
+\begin{equation}\label{eq:cap}
+F_{m,R}=mD+\frac{m\lambda^2}{4}(1+\beta^2)+\max_{x^2+y^2\le\beta^2}\big\{m(a^2-b^2)x+2mab\,y-c\,y^2\big\}.
+\end{equation}
+The maximum is attained by the interferometer of Theorem~\ref{thm:main} followed by general-dyne detection with seeds of squeezing exactly $e^{\pm R}$ on every output.
+\end{theorem}
+
+\begin{proof}
+For a pure seed, $K=(I+M)^{-1}$ and $B=2K-I=(I-M)(I+M)^{-1}$. Purity, $M\Omega M=\Omega$, gives $\Omega M\Omega^{\mathsf T}=M^{-1}$, hence $\Omega K\Omega^{\mathsf T}=I-K$ and $B\Omega+\Omega B=0$. The eigenvalues of $M$ lie in $[e^{-R},e^{R}]$, so those of $B$ lie in $[-\beta,\beta]$ and $B^2\le\beta^2I$. Repeating Lemma~\ref{lem:bound} with $n=m$, $\Pi=I$ and $X^2+Y^2\le\beta^2I$ gives $x^2+y^2\le\beta^2$ and $\tr(X^2-Y^2)\le m\beta^2-2y^2$. The covariance term is then at most $\tfrac{\lambda^2}{4}(m+m\beta^2-2y^2)$, which proves ``$\le$'' in~\eqref{eq:cap}.
+
+For attainment, choose a maximiser $(x,y)$ of~\eqref{eq:cap} with $x^2+y^2=\beta^2$; one exists because, for each fixed $y$, an affine function of $x$ attains its maximum at an endpoint of the feasible interval. Since $R<\infty$, $\beta<1$ and $I\pm B$ below are positive definite. Set $P=ee^{\mathsf T}$, $X=\beta I+(x-\beta)P$ and $Y=yP$. These commute, $X^2+Y^2=\beta^2I+(x^2+y^2-\beta^2)P=\beta^2I$ and $\tr Y^2=y^2$, so every inequality above is an equality. The resulting $B$ has $B^2=\beta^2I$ and anticommutes with $\Omega$. Put $M=(I-B)(I+B)^{-1}$. Since $\Omega(I+B)^{-1}=(I-B)^{-1}\Omega$, we get $\Omega M=(I+B)(I-B)^{-1}\Omega=M^{-1}\Omega$, so $M\Omega M=\Omega$ and the symmetric positive definite $M$ is a pure seed. Its eigenvalues are $(1\mp\beta)/(1\pm\beta)=e^{\mp R}$. In the copy basis rotated by $O$, $B$ is block diagonal over outputs, which gives the stated implementation.
+\end{proof}
+
+For $R=0$ (heterodyne detection) this gives $F_{m,0}=m(D+\lambda^2/4)$, which is additive. As $R\to\infty$, $\beta\to1$ and~\eqref{eq:cap} tends to~\eqref{eq:main}. The cap is on the measurement seed in normal-form coordinates; it is not by itself a bound on laboratory squeezing, total energy or detector efficiency.
+
+\subsection{How far below the quantum limit?}
+
+The QFI of one copy in the normal form is $Q=2D+c$. This is the standard pure-state formula~\cite{Monras2013}; Section~\ref{sec:repro} checks it in our convention by an independent Fock-space computation.
+
+\begin{corollary}[shortfall from the quantum Fisher information]\label{cor:gap}
+Suppose $D>0$ and write $(a,b)=\sqrt D(\cos\delta,\sin\delta)$. Then
+\begin{equation}\label{eq:gap}
+\Delta_m:=mQ-F_m^G=\min_{\phi}\big\{2mD\sin^2(\phi-\delta)+c\sin^22\phi\big\}.
+\end{equation}
+The sequence $\Delta_m$ is nondecreasing, satisfies $0\le\Delta_m\le c\sin^22\delta\le\lambda^2/2$, and converges:
+\[
+\lim_{m\to\infty}\Delta_m=c\sin^22\delta=\frac{2\lambda^2a^2b^2}{(a^2+b^2)^2}.
+\]
+If $D=0$, then $\Delta_m=0$ for all $m$. In all cases $F_m^G=mQ$ if and only if $\lambda ab=0$, and $F_m^G/m$ increases to $Q$.
+\end{corollary}
+
+\begin{proof}
+Since $2m(a\cos\phi+b\sin\phi)^2=2mD\cos^2(\phi-\delta)$, \eqref{eq:main} gives $mQ-F_m^G=c+\min_\phi\{2mD\sin^2(\phi-\delta)-c\cos^22\phi\}$, which is~\eqref{eq:gap}. The minimand increases with $m$ for each $\phi$, so $\Delta_m$ is nondecreasing. Taking $\phi=\delta$ gives $\Delta_m\le c\sin^22\delta$. For the limit, let $\phi_m$ be a minimiser. Then $2mD\sin^2(\phi_m-\delta)\le c$, so $\phi_m\to\delta$ modulo $\pi$ and $\liminf\Delta_m\ge\lim c\sin^22\phi_m=c\sin^22\delta$. If $D=0$, take $\phi=0$. Finally, $\Delta_m=0$ requires $\phi=\delta$ (mod $\pi$) together with $c\sin^22\phi=0$, which happens exactly when $\lambda ab=0$; and $F_m^G/m=Q-\Delta_m/m$ increases to $Q$ because $\Delta_m/m=\min_\phi\{2D\sin^2(\phi-\delta)+c\sin^22\phi/m\}$ is nonincreasing and at most $c/m$.
+\end{proof}
+
+\takeaway{the per-copy loss of Gaussian measurements vanishes like $1/m$. When $\lambda ab\ne0$ the total loss does not vanish: it grows towards a fixed positive amount that is never more than the variance information carried by a single copy. When $\lambda ab=0$ there is no loss at all.}
+
+\subsection{When does measuring jointly help?}
+
+\begin{proposition}[strict collective advantage]\label{prop:strict}
+Let $w=d'$ and $A=\sigma'$ be the whitened tangents (any fixed normalisation with $\sigma=I$). For $m\ge2$,
+\[
+F_m^G>mF_1^G\iff\det[w,\,Aw]\ne0\iff\lambda ab\ne0 .
+\]
+When it holds, $F_m^G-mF_1^G\ge(m-1)c\sin^22\phi_*>0$, where $\phi_*$ maximises the one-copy objective.
+\end{proposition}
+
+\begin{proof}
+In normal form, $\det[w,Aw]=\det\left(\begin{smallmatrix}a&\lambda a\\b&-\lambda b\end{smallmatrix}\right)=-2\lambda ab$. The determinant is unchanged by the rotation used in Lemma~\ref{lem:normal}, so the condition does not depend on the choice of normal-form coordinates. Suppose $\lambda ab\ne0$. At $\phi=0$ and $\phi=\pi/2$ the derivative of $2(a\cos\phi+b\sin\phi)^2$ is $\pm4ab\ne0$, while that of $c\cos^22\phi$ vanishes, so $\phi_*$ is not a covariance axis and $\sin^22\phi_*>0$. Using $\phi_*$ in~\eqref{eq:main} gives
+\[
+F_m^G\ge(m-1)c+m\cdot2(a\cos\phi_*+b\sin\phi_*)^2+c\cos^22\phi_*=mF_1^G+(m-1)c\sin^22\phi_* .
+\]
+Conversely, if $\lambda=0$ then $F_m^G=2mD=mF_1^G$. If $a=0$ or $b=0$, one axis maximises both terms of the one-copy objective, so $F_1^G=Q$ and $mF_1^G\le F_m^G\le mQ$ forces equality.
+\end{proof}
+
+The condition $\det[w,Aw]\ne0$ says that the direction in which the mean moves is not one of the two axes along which the noise ellipse is stretched or squeezed. In words: $w\ne0$, $A\ne0$, and $w$ is not an eigenvector of $A$. The determinant form covers the degenerate cases $w=0$ and $A=0$ automatically.
+
+\subsection{The coherent-squeezing example}
+
+Navarro et al.~\cite[Example~I]{Navarro2025} consider $\sigma=I$, $\sigma'=\diag(2,-2)$ and $d'=(\alpha,-\alpha)$. Thus $\lambda=2$, $c=2$, $r=0$, $s=2A$ with $A=m\alpha^2$, and~\eqref{eq:scalar} gives
+\begin{equation}\label{eq:example}
+F_m^G=\begin{cases}2m+2A+A^2/2,&0\le A\le2,\\ 2m+4A-2,&A\ge2,\end{cases}\qquad \sin2\phi=-\min\{A/2,1\}.
+\end{equation}
+The second line is the value achieved in~\cite{Navarro2025} for $\alpha^2\ge2$. Theorem~\ref{thm:main} shows it is optimal, and that the large-displacement branch already applies whenever the \emph{total} displacement satisfies $m\alpha^2\ge2$. Below that threshold the best bright-mode angle balances mean and variance information. Table~\ref{tab:example} gives exact values for $\alpha=1/2$.
+
+\begin{table}[ht]
+\centering
+\caption{Coherent-squeezing example with $\alpha=1/2$, so $Q=3$ per copy. Joint optimum $F_m^G$ from~\eqref{eq:example}, the separate-measurement value $mF_1^G$, and the shortfall $\Delta_m=mQ-F_m^G$, which increases to its limit $c\sin^22\delta=2$, reached once $m\alpha^2\ge2$ (Corollary~\ref{cor:gap}). The comparison is idealised: interferometer loss, mode mismatch and calibration error are not included.}
+\label{tab:example}
+\begin{tabular}{rcccccccccc}
+\toprule
+$m$&1&2&3&4&5&6&7&8&9&10\\
+\midrule
+$F_m^G$&$\tfrac{81}{32}$&$\tfrac{41}{8}$&$\tfrac{249}{32}$&$\tfrac{21}{2}$&$\tfrac{425}{32}$&$\tfrac{129}{8}$&$\tfrac{609}{32}$&$22$&$25$&$28$\\[2pt]
+$mF_1^G$&$\tfrac{81}{32}$&$\tfrac{81}{16}$&$\tfrac{243}{32}$&$\tfrac{81}{8}$&$\tfrac{405}{32}$&$\tfrac{243}{16}$&$\tfrac{567}{32}$&$\tfrac{81}{4}$&$\tfrac{729}{32}$&$\tfrac{405}{16}$\\[2pt]
+$\Delta_m$&$\tfrac{15}{32}$&$\tfrac{7}{8}$&$\tfrac{39}{32}$&$\tfrac{3}{2}$&$\tfrac{55}{32}$&$\tfrac{15}{8}$&$\tfrac{63}{32}$&$2$&$2$&$2$\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{Scope and limits}\label{sec:scope}
+\begin{itemize}
+\item The theorem concerns \emph{pure} single-mode models at a fixed operating point, with local (Cram\'er--Rao) Fisher information. Mixed states, general multimode tangents, Bayesian risk and finite-sample estimator performance are not covered. For mixed states, whitening gives $\sigma=\nu I$ with $\nu>1$, and the identity that makes the problem linear in $B$ fails.
+\item The measurement class is that of Definition~\ref{def:gauss}. Adaptive (outcome-dependent) Gaussian strategies and non-Gaussian detection are excluded.
+\item Theorem~\ref{thm:cap} caps the squeezing of general-dyne seeds without ancillas, in normal-form coordinates. Ancilla-assisted schemes under a squeezing budget, detector inefficiency and energy constraints are separate problems.
+\item The concentration interferometer is due to~\cite{Navarro2025}. The novelty claimed here is the finite-copy upper bound and its consequences, within a bounded literature search (31 October 2026). Historical priority is not established.
+\end{itemize}
+
+\section{Numerical checks}\label{sec:repro}
+The accompanying scripts check normalisations and implementations; they do not replace the proofs. The checks are: (a)~4{,}800 random pure general-dyne seeds for $m\in\{1,2,3,4,6,8\}$, none exceeding~\eqref{eq:main}, and explicit attainment to $10^{-13}$; (b)~3{,}000 random ancilla-assisted homodyne measurements ($m\le3$, up to three ancillas), with Fisher information computed directly from the outcome law and never above~\eqref{eq:main}; (c)~local maximisation of $F$ over pure seeds from several random starts, which approaches but never exceeds the bound; (d)~the squeezing-capped optimum~\eqref{eq:cap}, both bound and attainment, on random instances; (e)~the QFI formula $Q=2D+c$, by Fock-space finite differences for a squeezed coherent family; (f)~exact rational values in Table~\ref{tab:example}; and (g)~negative controls, in which deliberately wrong formulas (a missing dark-mode term, a factor error in the mean term, and an additive formula $mF_1^G$) are rejected by the same tests.
+
+\section{Conclusion}
+For pure single-mode Gaussian models the finite-copy question left open by Navarro et al.\ has a complete answer. Among all fixed Gaussian measurements on $m$ copies, nothing beats concentrating the mean into one bright output and measuring every output by homodyne detection. The best value is a one-angle formula, and the same proof gives the exact optimum under a seed-squeezing cap. The comparison with the quantum limit is explicit: the loss per copy falls like $1/m$, while the total loss rises to a bounded constant that is positive exactly when the mean and the variance change in misaligned directions. Mixed states, general multimode tangents and adaptive Gaussian strategies remain open.
+
+\begin{thebibliography}{9}\small
+\bibitem{BraunsteinCaves1994} S.~L. Braunstein and C.~M. Caves, Statistical distance and the geometry of quantum states, \emph{Phys.\ Rev.\ Lett.} \textbf{72}, 3439--3443 (1994). \href{https://doi.org/10.1103/PhysRevLett.72.3439}{doi:10.1103/PhysRevLett.72.3439}.
+\bibitem{Cenni2022} M.~F.~B. Cenni, L.~Lami, A.~Ac\'in and M.~Mehboudi, Thermometry of Gaussian quantum systems using Gaussian measurements, \emph{Quantum} \textbf{6}, 743 (2022). \href{https://doi.org/10.22331/q-2022-06-23-743}{doi:10.22331/q-2022-06-23-743}.
+\bibitem{Giedke2002} G.~Giedke and J.~I. Cirac, Characterization of Gaussian operations and distillation of Gaussian states, \emph{Phys.\ Rev.\ A} \textbf{66}, 032316 (2002). \href{https://doi.org/10.1103/PhysRevA.66.032316}{doi:10.1103/PhysRevA.66.032316}.
+\bibitem{Girardi2026} F.~Girardi, J.~Rizzo, L.~Turner, G.~Adesso and L.~Lami, A fully Gaussian quantum Stein's lemma, arXiv:2609.40307 (2026).
+\bibitem{Liu2026} J.~Liu, Z.~Wang and D.~Ma, Gaussian Fisher information is superadditive, arXiv:2610.02625 (2026).
+\bibitem{Monras2013} A.~Monras, Phase space formalism for quantum estimation of Gaussian states, arXiv:1303.3682 (2013).
+\bibitem{Navarro2025} J.~Navarro, S.~Morelli, M.~Sanz and M.~Mehboudi, On super additivity of Fisher information in fully Gaussian metrology, arXiv:2512.20534 (2025).
+\bibitem{Oh2019} C.~Oh, C.~Lee, C.~Rockstuhl, H.~Jeong, J.~Kim, H.~Nha and S.-Y. Lee, Optimal Gaussian measurements for phase estimation in single-mode Gaussian metrology, \emph{npj Quantum Inf.} \textbf{5}, 10 (2019). \href{https://doi.org/10.1038/s41534-019-0124-4}{doi:10.1038/s41534-019-0124-4}.
+\bibitem{Serafini2017} A.~Serafini, \emph{Quantum Continuous Variables: A Primer of Theoretical Methods}, CRC Press (2017). \href{https://doi.org/10.1201/9781315118727}{doi:10.1201/9781315118727}.
+\end{thebibliography}
+\end{document}

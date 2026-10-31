@@ -1,0 +1,10 @@
+[project]
+name = "finite-copy-gaussian-metrology"
+version = "1.0.0rc0"
+description = "Replay environment for the numerical checks of 'One bright mode is enough'."
+requires-python = ">=3.12,<3.13"
+dependencies = ["numpy==2.3.5", "scipy==1.17.0"]
+license = "MIT"
+
+[tool.uv]
+package = false

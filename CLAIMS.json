@@ -1,0 +1,62 @@
+{
+ "schemaVersion": "1.0",
+ "release": "finite-copy-gaussian-metrology",
+ "version": "1.0.0-candidate",
+ "doi": "10.5281/zenodo.23837733",
+ "conceptDoi": "10.5281/zenodo.23837732",
+ "creator": "Anonymous",
+ "status": "unrefereed candidate",
+ "model": "Smooth one-parameter family of pure single-mode Gaussian states, normal form sigma=I, sigma'=lambda*diag(1,-1), d'=(a,b) at the operating point; m identical copies; Fisher information of fixed (non-adaptive) Gaussian measurements: Gaussian ancillas, Gaussian unitary, homodyne detection, classical post-processing. Convention [q,p]=i, sigma = 2 x covariance, vacuum sigma=I.",
+ "claims": [
+  {
+   "id": "C1",
+   "kind": "theorem",
+   "location": "Theorem 1 (with Lemmas 2 and 3)",
+   "statement": "F_m^G = (m-1)lambda^2/2 + max_phi [2m(a cos phi + b sin phi)^2 + (lambda^2/2) cos^2 2phi] for every m>=1; attained by the concentration interferometer, a homodyne angle on the bright output and q-homodyne on the m-1 dark outputs.",
+   "evidence": "written proof; verification/verify_all.py checks a, b, c, attainment"
+  },
+  {
+   "id": "C2",
+   "kind": "lemma",
+   "location": "Lemma 2",
+   "statement": "Every fixed Gaussian measurement (ancillas, Gaussian unitary, homodyne on a subset, classical post-processing) has Fisher information at most that of complete homodyne detection of an orthonormal Lagrangian frame on the copies plus vacuum ancillas.",
+   "evidence": "written proof; check b"
+  },
+  {
+   "id": "C3",
+   "kind": "theorem",
+   "location": "Theorem 2",
+   "statement": "For pure general-dyne seeds with e^{-R}I <= M <= e^{R}I in normal-form coordinates, beta=tanh(R/2): F_{m,R} = mD + m lambda^2 (1+beta^2)/4 + max_{x^2+y^2<=beta^2}[m(a^2-b^2)x + 2mab y - (lambda^2/2) y^2], attained with seeds of squeezing e^{+-R}.",
+   "evidence": "written proof; check d"
+  },
+  {
+   "id": "C4",
+   "kind": "corollary",
+   "location": "Corollary 1",
+   "statement": "With Q=2D+lambda^2/2 the one-copy QFI and (a,b)=sqrt(D)(cos delta, sin delta): Delta_m = mQ - F_m^G = min_phi[2mD sin^2(phi-delta) + c sin^2 2phi], nondecreasing in m, 0 <= Delta_m <= c sin^2 2delta <= lambda^2/2, limit c sin^2 2delta; F_m^G = mQ iff lambda ab = 0.",
+   "evidence": "written proof; checks e, h"
+  },
+  {
+   "id": "C5",
+   "kind": "proposition",
+   "location": "Proposition 1",
+   "statement": "For m>=2, F_m^G > m F_1^G iff det[w, Aw] != 0 iff lambda ab != 0, with gain at least (m-1)c sin^2 2phi_*.",
+   "evidence": "written proof; check g"
+  },
+  {
+   "id": "C6",
+   "kind": "example",
+   "location": "Section 4.5, Table 1",
+   "statement": "Coherent squeezing (lambda=2, d'=(alpha,-alpha)): F_m^G = 2m+2A+A^2/2 for A=m alpha^2<=2, 2m+4A-2 for A>=2; exact table for alpha=1/2.",
+   "evidence": "exact rational check f"
+  }
+ ],
+ "notClaimed": [
+  "mixed states",
+  "general multimode tangents",
+  "adaptive Gaussian strategies",
+  "finite-sample or Bayesian estimation",
+  "laboratory squeezing or energy budgets",
+  "the concentration interferometer itself (Navarro et al.)"
+ ]
+}

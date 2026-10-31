@@ -1,0 +1,4 @@
+Local replay (31 October 2026): macOS 27 (arm64), CPython 3.12 via uv; numpy 2.3.5, scipy 1.17.0 (pinned in uv.lock). Run through the shared local research queue, one core.
+Checks: python -B verification/verify_all.py and python -O -B verification/verify_all.py (identical results.json).
+CI: GitHub Actions ubuntu-latest via astral-sh/setup-uv (.github/workflows/replay.yml): SHA256SUMS, checks in normal and -O mode, unchanged tree.
+LaTeX: pdfTeX (TeX Live 2026), two passes.

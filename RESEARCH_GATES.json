@@ -1,0 +1,177 @@
+{
+ "schemaVersion": "1.0",
+ "provenance": "Compiled 31 October 2026 for release 1.0.0-candidate from the bundle's 28 October bounded novelty audit, the publication-intake searches of 31 October and five independent reviewer searches. It documents the scrutiny performed, not historical priority.",
+ "contributionMap": [
+  {
+   "claim": "Exact finite-copy Gaussian Fisher information for pure single-mode models (Theorem 1)",
+   "unit": "statement",
+   "paperLocation": "Theorem 1",
+   "searches": [
+    {
+     "date": "2026-10-28",
+     "corpus": "web search engines, arXiv full HTML, publisher pages (original bundle novelty audit, retained privately)",
+     "query": "finite-copy Gaussian measurement Fisher information; super additivity Gaussian metrology; collective homodyne concentration"
+    },
+    {
+     "date": "2026-10-31",
+     "corpus": "arXiv API and HTML, Crossref, Semantic Scholar, web search (extended), GitHub code search incl. AI-draft repositories, Evidence Press feed; five independent AI reviewer searches",
+     "query": "optimal collective Gaussian measurement finite copies displacement squeezing; super additivity of Fisher information; finite-copy Gaussian; 2512.20534 citations and follow-ups; Cayley symplectic contraction Fisher information"
+    }
+   ],
+   "closestPriorWork": "Navarro-Morelli-Sanz-Mehboudi arXiv:2512.20534 (construction, asymptotics; finite m left open)",
+   "verdict": "new-in-bounded-search"
+  },
+  {
+   "claim": "Reduction of ancilla-assisted Gaussian measurements and disk bound with ancilla projection",
+   "unit": "method",
+   "paperLocation": "Lemmas 2 and 3",
+   "searches": [
+    {
+     "date": "2026-10-31",
+     "corpus": "arXiv API and HTML, Crossref, Semantic Scholar, web search (extended), GitHub code search incl. AI-draft repositories, Evidence Press feed; five independent AI reviewer searches",
+     "query": "optimal collective Gaussian measurement finite copies displacement squeezing; super additivity of Fisher information; finite-copy Gaussian; 2512.20534 citations and follow-ups; Cayley symplectic contraction Fisher information"
+    }
+   ],
+   "closestPriorWork": "Standard general-dyne normal form (Serafini 2017; Giedke-Cirac 2002; Cenni et al. 2022); Cayley/Siegel-disk parameterisation of pure seeds is standard",
+   "verdict": "partially-known-cited"
+  },
+  {
+   "claim": "Seed-squeezing-capped optimum (Theorem 2) and QFI shortfall (Corollary 1)",
+   "unit": "statement",
+   "paperLocation": "Theorem 2, Corollary 1",
+   "searches": [
+    {
+     "date": "2026-10-31",
+     "corpus": "arXiv API and HTML, Crossref, Semantic Scholar, web search (extended), GitHub code search incl. AI-draft repositories, Evidence Press feed; five independent AI reviewer searches",
+     "query": "optimal collective Gaussian measurement finite copies displacement squeezing; super additivity of Fisher information; finite-copy Gaussian; 2512.20534 citations and follow-ups; Cayley symplectic contraction Fisher information"
+    }
+   ],
+   "closestPriorWork": "Navarro et al. asymptotic gap closure; Monras 2013 QFI formula",
+   "verdict": "new-in-bounded-search"
+  },
+  {
+   "claim": "Concentration interferometer and large-displacement value",
+   "unit": "object",
+   "paperLocation": "Section 1, Section 4.5",
+   "searches": [
+    {
+     "date": "2026-10-28",
+     "corpus": "web search engines, arXiv full HTML, publisher pages (original bundle novelty audit, retained privately)",
+     "query": "finite-copy Gaussian measurement Fisher information; super additivity Gaussian metrology; collective homodyne concentration"
+    }
+   ],
+   "closestPriorWork": "Navarro et al. arXiv:2512.20534 Example I",
+   "verdict": "known-cited"
+  }
+ ],
+ "sourcesReadInFull": [
+  {
+   "citation": "Navarro, Morelli, Sanz, Mehboudi, arXiv:2512.20534v1 (2025)",
+   "usedFor": "Question, construction, example normalisation",
+   "readWhat": "Full HTML: Results, Example I, Discussion, Appendix B",
+   "date": "2026-10-31",
+   "evidenceLocator": "manuscript Sec. 1 and 4.5; PRIOR_ART.md"
+  },
+  {
+   "citation": "Cenni, Lami, Acin, Mehboudi, Quantum 6, 743 (2022)",
+   "usedFor": "Fisher information of general-dyne measurements; pure seeds",
+   "readWhat": "Sec. 3.2 and Appendix A",
+   "date": "2026-10-31",
+   "evidenceLocator": "manuscript Remark 1"
+  },
+  {
+   "citation": "Liu, Wang, Ma, arXiv:2610.02625v1 (2026)",
+   "usedFor": "Neighbouring superadditivity result",
+   "readWhat": "Abstract, main results, discussion of Navarro et al.",
+   "date": "2026-10-31",
+   "evidenceLocator": "manuscript Sec. 1; PRIOR_ART.md"
+  },
+  {
+   "citation": "Girardi et al., arXiv:2609.40307v1 (2026)",
+   "usedFor": "Neighbouring moment-decoupling result",
+   "readWhat": "Theorems 1-2, Appendix D",
+   "date": "2026-10-28",
+   "evidenceLocator": "manuscript Sec. 1; PRIOR_ART.md"
+  }
+ ],
+ "limitationTriage": [
+  {
+   "limitation": "Priority holds only within a bounded search.",
+   "closingQuestion": "Has the finite-copy optimum appeared elsewhere?",
+   "triedOrSearched": "Searches of 28 and 31 Oct 2026 incl. GitHub AI-draft repositories; five reviewer searches.",
+   "estimatedCost": "days",
+   "decision": "OPEN",
+   "cheap": false,
+   "reasonOpen": "Exhaustive search out of scope; disclosed."
+  },
+  {
+   "limitation": "Measurement class: was a cited normal form (covariance seeds).",
+   "closingQuestion": "Can ancilla-assisted measurements be covered by proof?",
+   "triedOrSearched": "Lemma 2 and Lemma 3 with ancilla projection; numerical check b.",
+   "estimatedCost": "hours",
+   "decision": "CLOSED",
+   "cheap": true
+  },
+  {
+   "limitation": "Adaptive Gaussian strategies excluded.",
+   "closingQuestion": "Does the bound hold with outcome-dependent settings?",
+   "triedOrSearched": "Proof auditor gave a scope counterexample to the proof method (not to the bound).",
+   "estimatedCost": "weeks",
+   "decision": "OPEN",
+   "cheap": false,
+   "reasonOpen": "Needs a different argument; stated as open."
+  },
+  {
+   "limitation": "Mixed single-mode states.",
+   "closingQuestion": "Exact optimum for sigma = nu I?",
+   "triedOrSearched": "Reviewers: Cayley identity fails; no short route.",
+   "estimatedCost": "weeks",
+   "decision": "OPEN",
+   "cheap": false,
+   "reasonOpen": "Research-level; stated as open."
+  },
+  {
+   "limitation": "General multimode tangents.",
+   "closingQuestion": "Exact optimum for unequal multimode tangents?",
+   "triedOrSearched": "Reviewers: weighted bounds needed.",
+   "estimatedCost": "weeks",
+   "decision": "OPEN",
+   "cheap": false,
+   "reasonOpen": "Research-level; stated as open."
+  },
+  {
+   "limitation": "No comparison with the quantum limit.",
+   "closingQuestion": "Exact shortfall from m QFI?",
+   "triedOrSearched": "Corollary 1 and check h.",
+   "estimatedCost": "hours",
+   "decision": "CLOSED",
+   "cheap": true
+  },
+  {
+   "limitation": "No resource-constrained optimum.",
+   "closingQuestion": "Exact optimum under a seed-squeezing cap?",
+   "triedOrSearched": "Theorem 2 and check d.",
+   "estimatedCost": "hours",
+   "decision": "CLOSED",
+   "cheap": true
+  }
+ ],
+ "extensionScout": {
+  "by": "Five internal AI reviewers and the editor, 31 October 2026",
+  "date": "2026-10-31",
+  "proposals": [
+   "Seed-squeezing cap",
+   "QFI shortfall corollary",
+   "Local estimator",
+   "Mixed states",
+   "Multimode tangents"
+  ],
+  "actions": [
+   "Theorem 2 added",
+   "Corollary 1 added",
+   "Remark 4 added",
+   "Declined: open (Section 5)",
+   "Declined: open (Section 5)"
+  ]
+ }
+}
